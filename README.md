@@ -179,23 +179,28 @@ completo funcionando contra la API real de Gemini vía `vercel dev` local — qu
 
 ## Link a la aplicación desplegada
 
-*Pendiente: agregar acá la URL pública de Vercel una vez desplegada (ver sección "Cómo desplegar a
-Vercel").*
+**https://comicsanscon-chat-spa.vercel.app**
+
+Verificado en producción: las 4 rutas (incluyendo refresh directo en `/chat/:personaje` y `/about`), y una
+conversación real con cada uno de los tres personajes contra la API de Gemini.
 
 ---
 
 ## Pendiente a cargo del usuario
 
-1. Confirmar que la `GEMINI_API_KEY` a usar en producción es la definitiva (la usada durante el desarrollo
-   para las pruebas fue provista por el usuario para testing).
-2. Subir este repositorio a GitHub (público).
-3. Deploy a producción (`vercel --prod`, o importando el repo desde el dashboard de Vercel) y cargar
-   `GEMINI_API_KEY` en las variables de entorno de producción.
-4. Probar el flujo completo contra la URL pública y completar las secciones de capturas y link de más
-   arriba.
+1. Confirmar que la `GEMINI_API_KEY` cargada en Vercel (Production y Preview) es la definitiva — la
+   usada fue la que el usuario compartió para testing; si se pegó en algún chat o lugar no seguro,
+   conviene rotarla en Google AI Studio y actualizarla con `vercel env rm` / `vercel env add`.
+2. Agregar las capturas de pantalla "oficiales" al README (Home, galería, chat de cada personaje, vista
+   mobile) — no se generaron automáticamente porque el entorno no tiene forma de guardar capturas del
+   navegador como archivos del repo.
+3. Opcional: conectar el proyecto de Vercel al repositorio de GitHub (`vercel git connect`) para que cada
+   push a `master` dispare un deploy automático. Ahora mismo el deploy se hizo manual por CLI (`vercel
+   --prod`); conectarlo crea una integración/webhook persistente, así que se dejó pendiente de
+   confirmación explícita en vez de hacerlo de forma automática.
 
-Todo lo demás — código, estructura, tests, diseño, y la verificación end-to-end contra Gemini real vía
-`vercel dev` local — está terminado.
+Todo lo demás — código, estructura, tests, diseño, repo en GitHub y deploy en producción verificado
+end-to-end contra Gemini real — está terminado.
 
 ---
 
