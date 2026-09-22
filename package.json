@@ -1,0 +1,15 @@
+{
+  "name": "comicsanscon-chat-spa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SPA para chatear con Oso Yogui, Scooby-Doo o Bugs Bunny usando Google Gemini AI, desplegada en Vercel.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.5"
+  }
+}

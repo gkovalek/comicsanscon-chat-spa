@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ComicSansCon · Chateá con tu personaje favorito</title>
+    <meta
+      name="description"
+      content="Prueba de concepto de ComicSansCon: chateá con Oso Yogui, Scooby-Doo o Bugs Bunny usando Google Gemini AI."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="site-header__brand" href="/home" data-link>
+          <span class="site-header__mark" aria-hidden="true">✂︎</span>
+          ComicSansCon
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/home" data-link data-nav-link>Inicio</a>
+          <a href="/chat" data-link data-nav-link>Chat</a>
+          <a href="/about" data-link data-nav-link>Acerca de</a>
+        </nav>
+
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">
+          🌙 Oscuro
+        </button>
+      </header>
+
+      <main id="app" class="page__main"></main>
+
+      <footer class="site-footer">
+        <p>Proyecto Integrador · Henry Full Stack · ComicSansCon (agencia ficticia)</p>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
