@@ -1,6 +1,6 @@
 /* =========================================================================
    Cartoon-Vintage — sistema visual
-   Mobile-first. Variables CSS + identidad propia por personaje.
+   Mobile-first. Escenas ilustradas en CSS puro + identidad propia por personaje.
    Breakpoints: 480px (phablet), 768px (tablet), 1024px (desktop).
    ========================================================================= */
 
@@ -39,6 +39,7 @@
   /* Sombra (uso deliberadamente escaso) */
   --shadow-card: 0 6px 0 rgba(28, 26, 23, 0.08);
   --shadow-pop: 0 10px 24px rgba(28, 26, 23, 0.16);
+  --shadow-ground: 0 14px 18px rgba(20, 20, 15, 0.22);
 
   /* Movimiento */
   --transition-fast: 140ms ease;
@@ -61,6 +62,7 @@
     --color-error-text: #ffb4a3;
     --shadow-card: 0 6px 0 rgba(0, 0, 0, 0.35);
     --shadow-pop: 0 10px 24px rgba(0, 0, 0, 0.5);
+    --shadow-ground: 0 14px 18px rgba(0, 0, 0, 0.45);
   }
 }
 
@@ -79,26 +81,39 @@
   --color-error-text: #ffb4a3;
   --shadow-card: 0 6px 0 rgba(0, 0, 0, 0.35);
   --shadow-pop: 0 10px 24px rgba(0, 0, 0, 0.5);
+  --shadow-ground: 0 14px 18px rgba(0, 0, 0, 0.45);
 }
 
-/* Identidad por personaje: escenario propio dentro del mismo sistema. */
+/* Identidad por personaje: cada uno es un pequeño escenario propio dentro del mismo sistema. */
 .theme-yogui {
-  --char-bg: #e7f0d3;
   --char-text: #23331a;
   --char-accent: #4c7a3b;
   --char-accent-2: #e8a839;
+  --char-sky-a: #bfe3f2;
+  --char-sky-b: #f4e8ac;
+  --char-ground-a: #8fbf62;
+  --char-ground-b: #4c7a3b;
+  --char-wash: rgba(76, 122, 59, 0.07);
 }
 .theme-scooby {
-  --char-bg: #20212f;
   --char-text: #eae7ff;
   --char-accent: #8a6cff;
   --char-accent-2: #2fcf9e;
+  --char-sky-a: #241c40;
+  --char-sky-b: #3c2c63;
+  --char-ground-a: #171225;
+  --char-ground-b: #0e0b18;
+  --char-wash: rgba(138, 108, 255, 0.1);
 }
 .theme-bugs {
-  --char-bg: #eae7df;
   --char-text: #262420;
   --char-accent: #d9711f;
   --char-accent-2: #3f7d53;
+  --char-sky-a: #e7dfce;
+  --char-sky-b: #eab27f;
+  --char-ground-a: #9a9488;
+  --char-ground-b: #6f695f;
+  --char-wash: rgba(217, 113, 31, 0.07);
 }
 
 /* =========================================================================
@@ -158,6 +173,46 @@ ul {
 img {
   max-width: 100%;
   display: block;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes drift-cloud {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(26px);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -261,10 +316,189 @@ img {
 }
 
 /* =========================================================================
-   Botones
+   Figura de personaje: <img> real con fallback CSS si el asset no existe
    ========================================================================= */
 
-.button {
+.figure-slot {
+  position: relative;
+  display: block;
+}
+
+.figure-slot.is-placeholder::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--char-accent, var(--color-primary));
+  border-radius: 46% 54% 58% 42% / 54% 44% 56% 46%;
+  opacity: 0.85;
+}
+
+.figure-slot.is-placeholder::after {
+  content: '';
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  width: 34%;
+  height: 22%;
+  background: var(--char-accent-2, var(--color-accent));
+  border-radius: 50%;
+  transform: translateX(-50%);
+  opacity: 0.9;
+}
+
+/* =========================================================================
+   Home — escena
+   ========================================================================= */
+
+.scene {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--color-text);
+  padding: var(--space-xl) var(--space-sm) var(--space-lg);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  animation: rise-in 0.55s ease both;
+}
+
+.scene__backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--char-sky-a) 0%, var(--char-sky-b) 62%, var(--char-ground-a) 62%, var(--char-ground-b) 100%);
+}
+
+.scene__sun {
+  position: absolute;
+  top: 8%;
+  right: 12%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--char-accent-2);
+  opacity: 0.8;
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  animation: drift-cloud 22s ease-in-out infinite alternate;
+}
+
+.theme-scooby .cloud {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.cloud--a {
+  width: 90px;
+  height: 26px;
+  top: 14%;
+  left: 8%;
+  animation-duration: 26s;
+}
+
+.cloud--b {
+  width: 60px;
+  height: 20px;
+  top: 24%;
+  left: 60%;
+  animation-duration: 19s;
+  animation-delay: -6s;
+}
+
+.tree {
+  position: absolute;
+  bottom: 34%;
+  width: 42px;
+  height: 60px;
+  background: var(--char-ground-b);
+  border-radius: 50% 50% 20% 20%;
+  transform-origin: bottom center;
+  animation: sway 6s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+.tree--a {
+  left: 6%;
+  height: 46px;
+  animation-delay: -1s;
+}
+.tree--b {
+  left: 16%;
+  height: 68px;
+  animation-delay: -3.5s;
+}
+.tree--c {
+  right: 8%;
+  height: 52px;
+  animation-delay: -2s;
+}
+
+.theme-bugs .tree {
+  border-radius: 6px 6px 0 0;
+  width: 30px;
+  animation: none;
+}
+
+.scene__blanket {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  width: 130px;
+  height: 46px;
+  transform: translateX(-50%) rotate(-2deg);
+  border-radius: var(--radius-sm);
+  border: 3px solid var(--color-text);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-primary) 10px,
+    var(--color-surface) 10px,
+    var(--color-surface) 20px
+  );
+  display: none;
+}
+
+.theme-yogui .scene__blanket {
+  display: block;
+}
+
+.scene__sign {
+  position: relative;
+  z-index: 2;
+  max-width: 26rem;
+  background: var(--color-surface);
+  border: 3px solid var(--color-text);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  transform: rotate(-1.4deg);
+  box-shadow: var(--shadow-ground);
+}
+
+.scene__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2xs);
+}
+
+.scene__title {
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  margin-bottom: var(--space-sm);
+}
+
+.scene__lead {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+  font-size: 1rem;
+}
+
+.scene__cta {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
@@ -273,182 +507,237 @@ img {
   padding: var(--space-xs) var(--space-md);
   font-weight: 700;
   text-decoration: none;
-  font-size: 1rem;
+  background: var(--color-primary);
+  color: var(--color-primary-ink);
   box-shadow: var(--shadow-card);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.button:hover {
+.scene__cta:hover {
   transform: translate(-1px, -2px);
   box-shadow: var(--shadow-pop);
 }
 
-.button--primary {
-  background: var(--color-primary);
-  color: var(--color-primary-ink);
-  border-color: var(--color-text);
+.scene__figure {
+  position: relative;
+  z-index: 2;
+  width: 150px;
+  height: 190px;
+}
+
+/* "Figurita" de colección: cada personaje enmarcado en su propia tarjeta,
+   porque los PNG que se usan no tienen transparencia real. */
+.scene__figure-img,
+.character-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10%;
+  background: var(--color-surface);
+  border: 3px solid var(--color-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  animation: float-y 4.2s ease-in-out infinite;
 }
 
 /* =========================================================================
-   Home
+   El elenco (selección de personajes en Home)
    ========================================================================= */
 
-.hero {
+.cast {
   padding: var(--space-lg) var(--space-sm);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+  animation: rise-in 0.55s ease both;
 }
 
-.hero__eyebrow {
+.cast__eyebrow,
+.gallery__eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
   font-size: 0.75rem;
-  color: var(--color-primary);
-  margin-bottom: var(--space-2xs);
-}
-
-.hero__title {
-  font-size: clamp(2.2rem, 8vw, 3.4rem);
-  margin-bottom: var(--space-sm);
-}
-
-.hero__lead {
+  font-weight: 700;
   color: var(--color-text-muted);
-  max-width: 46ch;
-  margin-bottom: var(--space-md);
-  font-size: 1.05rem;
-}
-
-.hero__scene {
-  position: relative;
-  height: 200px;
-  border: 3px solid var(--color-text);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface-soft);
-  overflow: hidden;
-}
-
-.hero__blob {
-  position: absolute;
-  border-radius: 44% 56% 62% 38% / 41% 44% 56% 59%;
-}
-
-.hero__blob--a {
-  width: 130px;
-  height: 130px;
-  background: var(--color-accent);
-  top: -30px;
-  left: -20px;
-}
-
-.hero__blob--b {
-  width: 90px;
-  height: 90px;
-  background: var(--color-primary);
-  bottom: -20px;
-  right: 30px;
-  opacity: 0.85;
-}
-
-.hero__blob--c {
-  width: 60px;
-  height: 60px;
-  background: var(--color-text);
-  top: 40%;
-  right: -10px;
-  opacity: 0.12;
 }
 
 .cast__title {
-  padding: 0 var(--space-sm);
-  font-size: 1.5rem;
-  margin-bottom: var(--space-sm);
+  font-size: 1.6rem;
+  margin: var(--space-3xs) 0 var(--space-md);
 }
 
 .cast__grid,
 .gallery__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-sm);
-  padding: 0 var(--space-sm) var(--space-lg);
+  gap: var(--space-md);
+}
+
+.gallery {
+  padding: var(--space-lg) var(--space-sm) var(--space-xl);
+  animation: rise-in 0.55s ease both;
+}
+
+.gallery__title {
+  font-size: clamp(1.7rem, 6vw, 2.4rem);
+  margin: var(--space-2xs) 0 var(--space-md);
 }
 
 /* =========================================================================
-   Tarjeta de personaje (Home + Galería)
+   Tarjeta de personaje — pequeño diorama, no card blanca genérica
    ========================================================================= */
 
 .character-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
+  position: relative;
+  display: block;
   text-decoration: none;
-  background: var(--char-bg, var(--color-surface));
-  color: var(--char-text, var(--color-text));
-  border: 2px solid var(--color-text);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
+  color: var(--char-text);
+  border: 3px solid var(--color-text);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
   box-shadow: var(--shadow-card);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
+.cast__grid .character-card:nth-child(1),
+.gallery__grid .character-card:nth-child(1) {
+  transform: rotate(-0.8deg);
+}
+.cast__grid .character-card:nth-child(2),
+.gallery__grid .character-card:nth-child(2) {
+  transform: rotate(0.6deg);
+}
+.cast__grid .character-card:nth-child(3),
+.gallery__grid .character-card:nth-child(3) {
+  transform: rotate(-0.4deg);
+}
+
 .character-card:hover {
-  transform: translate(-2px, -4px);
+  transform: translateY(-4px) rotate(0deg);
   box-shadow: var(--shadow-pop);
 }
 
-.character-card__avatar {
-  font-size: 2.4rem;
-  line-height: 1;
+.character-card__scene {
+  position: relative;
+  display: block;
+  height: 148px;
+  background: linear-gradient(180deg, var(--char-sky-a) 0%, var(--char-sky-b) 60%, var(--char-ground-a) 60%, var(--char-ground-b) 100%);
+  overflow: hidden;
+}
+
+.character-card__scene::before,
+.character-card__scene::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Motivo decorativo: Yogui = sol de parque, Scooby = luna, Bugs = ventanas de edificio */
+.theme-yogui .character-card__scene::before {
+  width: 34px;
+  height: 34px;
+  top: 12px;
+  right: 16px;
+  background: var(--char-accent-2);
+  opacity: 0.85;
+}
+.theme-yogui .character-card__scene::after {
+  width: 46px;
+  height: 46px;
+  bottom: -12px;
+  left: 10%;
+  background: var(--char-ground-b);
+  opacity: 0.5;
+}
+
+.theme-scooby .character-card__scene::before {
+  width: 24px;
+  height: 24px;
+  top: 14px;
+  left: 18px;
+  background: var(--char-accent-2);
+  box-shadow: 30px 22px 0 -2px rgba(255, 255, 255, 0.5), 52px 8px 0 -4px rgba(255, 255, 255, 0.4);
+  opacity: 0.9;
+}
+.theme-scooby .character-card__scene::after {
+  width: 90px;
+  height: 30px;
+  bottom: 0;
+  right: -10px;
+  background: var(--char-ground-a);
+  opacity: 0.6;
+  border-radius: 50% 50% 0 0;
+}
+
+.theme-bugs .character-card__scene::before {
+  width: 26px;
+  height: 60px;
+  bottom: 0;
+  left: 16%;
+  background: var(--char-ground-b);
+  border-radius: 3px 3px 0 0;
+  opacity: 0.7;
+}
+.theme-bugs .character-card__scene::after {
+  width: 20px;
+  height: 44px;
+  bottom: 0;
+  left: 26%;
+  background: var(--char-ground-b);
+  border-radius: 3px 3px 0 0;
+  opacity: 0.5;
+}
+
+.character-card__figure {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  transform: translateX(-50%);
+}
+
+.character-card__figure.is-placeholder::before {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+}
+
+.character-card__body {
+  display: block;
+  background: var(--color-surface);
+  padding: var(--space-sm);
+  padding-top: var(--space-md);
 }
 
 .character-card__name {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  margin-bottom: 2px;
+  color: var(--color-text);
 }
 
 .character-card__place {
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--char-accent, var(--color-primary));
+  color: var(--char-accent);
+  margin-bottom: var(--space-2xs);
 }
 
 .character-card__desc {
-  font-size: 0.92rem;
-  opacity: 0.9;
-}
-
-.character-card__badge {
-  align-self: flex-start;
-  margin-top: var(--space-2xs);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 999px;
-  border: 1.5px solid currentColor;
-}
-
-/* =========================================================================
-   Galería (/chat)
-   ========================================================================= */
-
-.gallery {
-  padding: var(--space-lg) 0 0;
-}
-
-.gallery__eyebrow {
-  padding: 0 var(--space-sm);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.9rem;
   color: var(--color-text-muted);
 }
 
-.gallery__title {
-  padding: var(--space-2xs) var(--space-sm) var(--space-md);
-  font-size: clamp(1.8rem, 6vw, 2.6rem);
+.character-card__badge {
+  position: absolute;
+  top: var(--space-sm);
+  left: -6px;
+  background: var(--color-accent);
+  color: var(--color-text);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px 3px 14px;
+  transform: rotate(-4deg);
+  box-shadow: var(--shadow-card);
+  z-index: 2;
 }
 
 /* =========================================================================
@@ -459,6 +748,7 @@ img {
   max-width: 68ch;
   margin: 0 auto;
   padding: var(--space-lg) var(--space-sm) var(--space-xl);
+  animation: rise-in 0.55s ease both;
 }
 
 .about__eyebrow {
@@ -520,6 +810,7 @@ img {
   flex: 1;
   min-height: 0;
   background: var(--color-bg);
+  animation: rise-in 0.4s ease both;
 }
 
 .chat-view__header {
@@ -528,8 +819,8 @@ img {
   align-items: center;
   gap: var(--space-2xs) var(--space-sm);
   padding: var(--space-sm);
-  background: var(--char-bg, var(--color-surface-soft));
-  color: var(--char-text, var(--color-text));
+  background: linear-gradient(135deg, var(--char-sky-a), var(--char-sky-b));
+  color: var(--char-text);
   border-bottom: 3px solid var(--color-text);
 }
 
@@ -551,6 +842,29 @@ img {
   min-width: 0;
 }
 
+.chat-view__portrait {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-text);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.chat-view__portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 3px;
+  animation: none;
+}
+
+.chat-view__portrait.is-placeholder::before {
+  border-radius: 50%;
+}
+
 .chat-view__title-text {
   flex: 1;
   min-width: 0;
@@ -561,22 +875,6 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.chat-view__avatar {
-  font-size: 1.8rem;
-}
-
-.chat-view__title h1 {
-  font-size: 1.15rem;
-}
-
-.chat-view__title p {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--char-accent, var(--color-primary));
 }
 
 .chat-view__clear {
@@ -596,14 +894,28 @@ img {
   padding: var(--space-sm);
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
+  background: linear-gradient(var(--char-wash), var(--char-wash)), var(--color-bg);
 }
 
 .message {
+  position: relative;
   max-width: 80%;
   padding: var(--space-2xs) var(--space-sm);
   border-radius: var(--radius-md);
   border: 2px solid var(--color-text);
+}
+
+.message::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  width: 14px;
+  height: 14px;
+  background: inherit;
+  border-right: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
 }
 
 .message__text {
@@ -619,11 +931,22 @@ img {
   border-bottom-right-radius: var(--space-3xs);
 }
 
+.message--user::after {
+  right: 10px;
+  transform: scaleX(-1);
+}
+
 .message--character {
   align-self: flex-start;
   background: var(--color-surface);
-  border-color: var(--color-text);
+  border-color: var(--char-accent, var(--color-text));
+  border-left-width: 4px;
   border-bottom-left-radius: var(--space-3xs);
+}
+
+.message--character::after {
+  left: 10px;
+  border-color: var(--char-accent, var(--color-text));
 }
 
 .message--error {
@@ -632,6 +955,10 @@ img {
   color: var(--color-error-text);
   border-color: var(--color-error-text);
   font-size: 0.9rem;
+}
+
+.message--error::after {
+  display: none;
 }
 
 .message__meta {
@@ -745,24 +1072,33 @@ img {
     padding-top: 0;
   }
 
-  .hero {
-    flex-direction: row;
+  .scene {
+    min-height: 480px;
     align-items: center;
     padding: var(--space-xl) var(--space-lg);
   }
 
-  .hero__copy {
-    flex: 1;
+  .scene {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
-  .hero__scene {
-    flex: 1;
-    height: 320px;
+  .scene__figure {
+    position: absolute;
+    right: 8%;
+    bottom: 4%;
+    width: 200px;
+    height: 240px;
+    z-index: 1;
   }
 
-  .cast__title,
-  .gallery__title,
-  .gallery__eyebrow {
+  .scene__sign {
+    margin-right: 40%;
+  }
+
+  .cast,
+  .gallery {
     padding-left: var(--space-lg);
     padding-right: var(--space-lg);
   }
@@ -770,7 +1106,6 @@ img {
   .cast__grid,
   .gallery__grid {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 var(--space-lg) var(--space-xl);
   }
 
   .chat-view {
@@ -797,8 +1132,18 @@ img {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .hero__title {
-    font-size: 3.8rem;
+  .scene {
+    min-height: 560px;
+  }
+
+  .scene__title {
+    font-size: 3.2rem;
+  }
+
+  .scene__figure {
+    width: 260px;
+    height: 300px;
+    right: 10%;
   }
 
   .chat-view {

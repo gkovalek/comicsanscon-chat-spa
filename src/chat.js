@@ -36,17 +36,28 @@ export async function fetchCharacterReply(characterId, messages) {
   return parseGeminiReply(data);
 }
 
-/** Tarjeta de personaje reutilizada en la Home y en la galería /chat. */
+/** Tarjeta de personaje reutilizada en la Home y en la galería /chat: un pequeño diorama propio. */
 export function renderCharacterCard(character) {
   const badge = hasStoredHistory(character.id)
-    ? '<span class="character-card__badge">Tenés una charla guardada</span>'
+    ? '<span class="character-card__badge">Charla guardada</span>'
     : '';
   return `
     <a class="character-card theme-${character.tema}" href="/chat/${character.id}" data-link>
-      <span class="character-card__avatar" aria-hidden="true">${character.avatarEmoji}</span>
-      <h3 class="character-card__name">${escapeHtml(character.nombre)}</h3>
-      <p class="character-card__place">${escapeHtml(character.lugar)}</p>
-      <p class="character-card__desc">${escapeHtml(character.descripcionCorta)}</p>
+      <span class="character-card__scene" aria-hidden="true">
+        <span class="character-card__figure figure-slot">
+          <img
+            src="${character.imagen}"
+            alt=""
+            class="character-card__img"
+            onerror="this.parentElement.classList.add('is-placeholder'); this.remove()"
+          />
+        </span>
+      </span>
+      <span class="character-card__body">
+        <h3 class="character-card__name">${escapeHtml(character.nombre)}</h3>
+        <p class="character-card__place">${escapeHtml(character.lugar)}</p>
+        <p class="character-card__desc">${escapeHtml(character.descripcionCorta)}</p>
+      </span>
       ${badge}
     </a>
   `;
@@ -134,7 +145,14 @@ function chatViewTemplate(character) {
       <header class="chat-view__header">
         <a class="chat-view__back" href="/chat" data-link>&larr; Personajes</a>
         <div class="chat-view__title">
-          <span class="chat-view__avatar" aria-hidden="true">${character.avatarEmoji}</span>
+          <span class="chat-view__portrait figure-slot">
+            <img
+              src="${character.imagen}"
+              alt=""
+              class="chat-view__portrait-img"
+              onerror="this.parentElement.classList.add('is-placeholder'); this.remove()"
+            />
+          </span>
           <div class="chat-view__title-text">
             <h1>${escapeHtml(character.nombre)}</h1>
             <p>${escapeHtml(character.lugar)}</p>

@@ -62,26 +62,42 @@ function updateActiveNav(path) {
 
 function renderHome() {
   document.title = `${SITE_NAME} · Chateá con tu personaje favorito`;
+  const protagonist = CHARACTERS[0];
   appEl().innerHTML = `
-    <section class="hero">
-      <div class="hero__copy">
-        <p class="hero__eyebrow">Cartoon-Vintage · prueba de concepto</p>
-        <h1 class="hero__title">Chateá con tu<br />personaje favorito.</h1>
-        <p class="hero__lead">
+    <section class="scene theme-${protagonist.tema}" aria-labelledby="home-scene-title">
+      <div class="scene__backdrop" aria-hidden="true">
+        <span class="scene__sun"></span>
+        <span class="cloud cloud--a"></span>
+        <span class="cloud cloud--b"></span>
+        <span class="tree tree--a"></span>
+        <span class="tree tree--b"></span>
+        <span class="tree tree--c"></span>
+        <span class="scene__blanket"></span>
+      </div>
+
+      <div class="scene__sign">
+        <p class="scene__eyebrow">Cartoon-Vintage · prueba de concepto</p>
+        <h1 id="home-scene-title" class="scene__title">Chateá con tu<br />personaje favorito.</h1>
+        <p class="scene__lead">
           Una conversación real, con la voz de siempre. Elegí a Yogui, Scooby-Doo o Bugs Bunny
           y contales lo que se te ocurra.
         </p>
-        <a class="button button--primary" href="/chat" data-link>Elegir personaje</a>
+        <a class="scene__cta" href="/chat" data-link>Elegir personaje <span aria-hidden="true">→</span></a>
       </div>
-      <div class="hero__scene" aria-hidden="true">
-        <span class="hero__blob hero__blob--a"></span>
-        <span class="hero__blob hero__blob--b"></span>
-        <span class="hero__blob hero__blob--c"></span>
+
+      <div class="scene__figure figure-slot" aria-hidden="true">
+        <img
+          src="${protagonist.imagen}"
+          alt=""
+          class="scene__figure-img"
+          onerror="this.parentElement.classList.add('is-placeholder'); this.remove()"
+        />
       </div>
     </section>
 
     <section class="cast">
-      <h2 class="cast__title">El elenco</h2>
+      <p class="cast__eyebrow">El elenco</p>
+      <h2 class="cast__title">Elegí con quién hablar</h2>
       <div class="cast__grid">
         ${CHARACTERS.map(renderCharacterCard).join('')}
       </div>
