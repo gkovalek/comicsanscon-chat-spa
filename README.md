@@ -1,4 +1,4 @@
-# ComicSansCon — Chateá con tu personaje favorito
+# Cartoon-Vintage — Chateá con tu personaje favorito
 
 Proyecto Integrador · Módulo 3 · Henry (Full Stack)
 
@@ -6,7 +6,7 @@ Single Page Application en JavaScript vanilla que permite chatear con un persona
 usando **Google Gemini AI**, con routing propio por History API, diseño responsive mobile-first,
 y una Vercel Serverless Function como proxy seguro (la API key nunca llega al navegador).
 
-> Rol simulado: desarrollador/a frontend junior en **ComicSansCon**, una agencia digital ficticia
+> Rol simulado: desarrollador/a frontend junior en **Cartoon-Vintage**, una agencia digital ficticia
 > especializada en experiencias interactivas. Esta app es una prueba de concepto (POC).
 
 ---

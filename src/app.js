@@ -6,7 +6,7 @@ import { CHARACTERS, getCharacterById } from './characters.js';
 import { initChatView, renderCharacterCard } from './chat.js';
 import { loadThemePreference, saveThemePreference } from './utils.js';
 
-const SITE_NAME = 'ComicSansCon';
+const SITE_NAME = 'Cartoon-Vintage';
 
 function appEl() {
   return document.getElementById('app');
@@ -65,7 +65,7 @@ function renderHome() {
   appEl().innerHTML = `
     <section class="hero">
       <div class="hero__copy">
-        <p class="hero__eyebrow">ComicSansCon · prueba de concepto</p>
+        <p class="hero__eyebrow">Cartoon-Vintage · prueba de concepto</p>
         <h1 class="hero__title">Chateá con tu<br />personaje favorito.</h1>
         <p class="hero__lead">
           Una conversación real, con la voz de siempre. Elegí a Yogui, Scooby-Doo o Bugs Bunny
@@ -94,7 +94,7 @@ function renderAbout() {
   appEl().innerHTML = `
     <section class="about">
       <p class="about__eyebrow">Acerca del proyecto</p>
-      <h1 class="about__title">Una prueba de concepto de ComicSansCon</h1>
+      <h1 class="about__title">Una prueba de concepto de Cartoon-Vintage</h1>
       <p class="about__paragraph">
         <strong>${SITE_NAME}</strong> es una agencia digital (ficticia) especializada en experiencias
         interactivas para fans de videojuegos, películas y series. Esta aplicación es una prueba de
