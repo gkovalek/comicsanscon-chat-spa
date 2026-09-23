@@ -51,14 +51,41 @@ instrucción de responder corto, en español, y de declinar en personaje cualqui
 
 ---
 
+## Diseño visual
+
+La interfaz está pensada como una serie de **escenas** (no dashboards/cards genéricas): Home es un diorama
+tipo parque con cielo en gradiente, sol, nubes y árboles animados en CSS puro; cada personaje tiene su
+propia ambientación (Yogui = parque de día, Scooby = noche de misterio con luna, Bugs = paisaje urbano); y
+el chat muestra un retrato del personaje con un header temático y burbujas de diálogo con cola, en vez de
+un layout tipo ChatGPT genérico. Todas las animaciones (flotado suave de los personajes, deriva de nubes,
+entrada con fade+scale) son `@keyframes` de CSS vanilla, sin librerías, y respetan
+`prefers-reduced-motion`.
+
+Las imágenes reales de los personajes (`assets/*.png`) provienen de clip-art de cada personaje; ninguna
+tiene transparencia real (dos traen el patrón a cuadros típico de una vista previa de transparencia
+"quemado" en los píxeles, y una tiene fondo blanco liso), algo que solo se pudo confirmar leyendo los
+archivos directamente, no por CSS. En vez de intentar recortar ese fondo, cada imagen se enmarca como una
+"figurita de colección" (tarjeta blanca con borde grueso), consistente con la estética general — así el
+fondo del archivo se lee como una decisión de diseño en vez de un error. Si en algún momento se reemplazan
+por PNGs con transparencia real, el marco blanco simplemente deja de notarse.
+
+Si `assets/*.png` no existe, cada figura cae a un *blob* de CSS con el color del personaje (mismo lugar,
+mismo tamaño) para que el layout nunca se rompa.
+
+---
+
 ## Estructura del proyecto
 
 ```
 ├── api/
 │   └── functions.js       # Serverless function (proxy seguro a Gemini) → /api/functions
+├── assets/
+│   ├── yogi.png             # Imágenes reales de cada personaje (ver "Diseño visual" abajo)
+│   ├── scooby.png
+│   └── bugs.png
 ├── src/
 │   ├── index.html
-│   ├── styles.css          # Sistema visual: variables CSS, identidad por personaje, dark mode
+│   ├── styles.css          # Sistema visual: escenas por personaje, animaciones CSS, dark mode
 │   ├── app.js               # Router SPA (History API)
 │   ├── chat.js               # Fetching + render del chat
 │   ├── utils.js                # Transformación de datos, parseo y localStorage (testeado)
@@ -246,6 +273,15 @@ de trabajo guiado por el usuario. Registro del proceso:
 - Los *system prompts* de los tres personajes fueron escritos por la IA como borrador inicial y ya fueron
   validados con respuestas reales de Gemini durante el desarrollo; igualmente se recomienda una revisión
   manual adicional en Google AI Studio antes de un uso más extendido.
+- **Rediseño visual**: a pedido explícito del usuario, se rehizo la interfaz para que se sienta como
+  "escenas" ilustradas (ver sección "Diseño visual") en vez de un layout genérico de IA, con referencia
+  visual a Cartoon Network clásico + diseño editorial, sin copiarlo literalmente. Al integrar las imágenes
+  reales de los personajes que aportó el usuario, se detectó (leyendo los archivos, no adivinando) que
+  ninguna tenía transparencia real; la solución de "figurita enmarcada" para disimularlo fue una decisión
+  de diseño tomada en el momento, no algo pedido de antemano. También se corrigió un bug real: el fallback
+  de imagen rota (`onerror`) llamaba `.remove()` antes de leer `.parentElement`, lo que lanzaba
+  `Cannot read properties of null` en la consola — se detectó revisando la consola del navegador, no solo
+  mirando el resultado visual.
 
 ---
 
