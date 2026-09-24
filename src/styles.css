@@ -265,7 +265,7 @@ img {
 }
 
 .site-header__logo {
-  height: 44px;
+  height: 132px;
   width: auto;
   display: block;
   transition: filter var(--transition-base);
@@ -273,7 +273,7 @@ img {
 
 @media (min-width: 768px) {
   .site-header__logo {
-    height: 52px;
+    height: 156px;
   }
 }
 
