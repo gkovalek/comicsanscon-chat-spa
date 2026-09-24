@@ -265,7 +265,7 @@ img {
 }
 
 .site-header__logo {
-  height: 64px;
+  height: 84px;
   width: auto;
   display: block;
   transition: filter var(--transition-base);
@@ -273,7 +273,7 @@ img {
 
 @media (min-width: 768px) {
   .site-header__logo {
-    height: 88px;
+    height: 120px;
   }
 }
 
@@ -1087,7 +1087,7 @@ img {
 
 @media (min-width: 768px) {
   .site-header {
-    padding: var(--space-sm) var(--space-lg);
+    padding: 10px var(--space-lg);
   }
 
   .site-nav {
