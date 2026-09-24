@@ -525,15 +525,14 @@ img {
   height: 190px;
 }
 
-/* "Figurita" de colección: cada personaje enmarcado en su propia tarjeta,
-   porque los PNG que se usan no tienen transparencia real. */
+/* "Figurita" de colección: cada personaje sobre su propio fondo negro
+   (parte del arte, no un recorte), enmarcado como una pequeña postal. */
 .scene__figure-img,
 .character-card__img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 10%;
-  background: var(--color-surface);
+  background: #0a0a0a;
   border: 3px solid var(--color-text);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
@@ -782,14 +781,29 @@ img {
 
 .about__list-item {
   display: flex;
-  gap: var(--space-xs);
-  align-items: flex-start;
-  font-size: 1.4rem;
+  gap: var(--space-sm);
+  align-items: center;
 }
 
 .about__list-item div {
   font-size: 1rem;
   color: var(--color-text-muted);
+}
+
+.about__portrait {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-text);
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.about__portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .about__disclaimer {
@@ -849,7 +863,7 @@ img {
   height: 44px;
   border-radius: var(--radius-sm);
   border: 2px solid var(--color-text);
-  background: var(--color-surface);
+  background: #0a0a0a;
   overflow: hidden;
 }
 
@@ -857,7 +871,6 @@ img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 3px;
   animation: none;
 }
 

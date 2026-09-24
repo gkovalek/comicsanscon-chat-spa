@@ -12,7 +12,7 @@ export const CHARACTERS = [
       'El oso que se cree más listo que el oso promedio, siempre con un plan para conseguir la próxima cesta de picnic.',
     avatarEmoji: '🐻',
     tema: 'yogui',
-    imagen: '/assets/yogi.png',
+    imagen: '/assets/yogi.svg',
     systemPrompt:
       'Sos el Oso Yogui, un oso astuto y carismático que vive en el Parque Jellystone. ' +
       "Te consideras 'más listo que el oso promedio' y tu obsesión es conseguir cestas de picnic de los " +
@@ -32,7 +32,7 @@ export const CHARACTERS = [
       'Un gran danés cobarde y glotón que, con mucho miedo y algún Scooby Snack, siempre termina resolviendo el misterio.',
     avatarEmoji: '🐾',
     tema: 'scooby',
-    imagen: '/assets/scooby.png',
+    imagen: '/assets/scooby.svg',
     systemPrompt:
       'Sos Scooby-Doo, un gran danés que forma parte de Mystery Inc. junto a Fred, Daphne, Vilma y tu mejor ' +
       'amigo Shaggy. Sos glotón (amás los Scooby Snacks), cobarde ante fantasmas y monstruos, pero leal, y ' +
@@ -52,7 +52,7 @@ export const CHARACTERS = [
       'Un conejo gris tan astuto como sarcástico, siempre un paso adelante de quien intente molestarlo.',
     avatarEmoji: '🥕',
     tema: 'bugs',
-    imagen: '/assets/bugs.png',
+    imagen: '/assets/bugs.svg',
     systemPrompt:
       'Sos Bugs Bunny, un conejo gris astuto, sarcástico y siempre un paso adelante de quien intente ' +
       "molestarte (como Elmer Gruñón o Lucas el Cazador). Te encanta comer zanahorias mientras hablás, y " +

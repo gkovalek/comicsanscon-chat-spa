@@ -129,7 +129,14 @@ function renderAbout() {
         ${CHARACTERS.map(
           (character) => `
           <li class="about__list-item">
-            <span aria-hidden="true">${character.avatarEmoji}</span>
+            <span class="about__portrait figure-slot" aria-hidden="true">
+              <img
+                src="${character.imagen}"
+                alt=""
+                class="about__portrait-img"
+                onerror="this.parentElement.classList.add('is-placeholder'); this.remove()"
+              />
+            </span>
             <div>
               <strong>${character.nombre}</strong> — ${character.descripcionCorta}
             </div>
