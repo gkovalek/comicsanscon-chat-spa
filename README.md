@@ -224,24 +224,6 @@ conversación real con cada uno de los tres personajes contra la API de Gemini.
 
 ---
 
-## Pendiente a cargo del usuario
-
-1. Confirmar que la `GEMINI_API_KEY` cargada en Vercel (Production y Preview) es la definitiva — la
-   usada fue la que el usuario compartió para testing; si se pegó en algún chat o lugar no seguro,
-   conviene rotarla en Google AI Studio y actualizarla con `vercel env rm` / `vercel env add`.
-2. Sacar las capturas de pantalla y guardarlas en `docs/screenshots/` con los nombres indicados en
-   [docs/screenshots/README.md](docs/screenshots/README.md) — no se generaron automáticamente porque el
-   entorno no tiene forma de guardar capturas del navegador como archivos del repo.
-3. Opcional: conectar el proyecto de Vercel al repositorio de GitHub (`vercel git connect`) para que cada
-   push a `master` dispare un deploy automático. Ahora mismo el deploy se hizo manual por CLI (`vercel
-   --prod`); conectarlo crea una integración/webhook persistente, así que se dejó pendiente de
-   confirmación explícita en vez de hacerlo de forma automática.
-
-Todo lo demás — código, estructura, tests, diseño, repo en GitHub y deploy en producción verificado
-end-to-end contra Gemini real — está terminado.
-
----
-
 ## Participación de la IA
 
 En una primera instancia, se utilizó Claude para validar la consigna y la documentación proporcionada por
