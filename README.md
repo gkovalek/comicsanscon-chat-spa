@@ -231,57 +231,46 @@ end-to-end contra Gemini real — está terminado.
 
 ---
 
-## Uso de IA en el proyecto
+## Participación de la IA
 
-Este proyecto se construyó con **Claude Code** (Anthropic) como asistente de desarrollo, dentro de un flujo
-de trabajo guiado por el usuario. Registro del proceso:
+En una primera instancia, se utilizó Claude para validar la consigna y la documentación proporcionada por
+Henry. Se le solicitó que analizara la presentación oficial del Proyecto Integrador (PDF) y la guía de
+acompañamiento (DOCX), con el objetivo de contrastar ambos documentos y detectar posibles contradicciones
+antes de comenzar la implementación.
 
-- **Validación de la consigna**: se le pidió a Claude que leyera y contrastara la presentación oficial del
-  PI (PDF) y la guía de acompañamiento (docx) provistas por Henry, para confirmar que no hubiera
-  contradicciones antes de empezar a programar.
-- **Plan de arquitectura**: se usó a Claude en "modo plan" para proponer la arquitectura completa (router
-  SPA, contrato de la serverless function, separación fetching/transformación/render, breakpoints, plan de
-  tests) antes de escribir código, iterando sobre esa propuesta con instrucciones explícitas del usuario
-  (elección de personajes, qué extras implementar, endpoint exacto de la function, exigencia de tests de
-  routing, y una dirección de diseño detallada para evitar una estética "genérica de IA").
-- **Decisiones tomadas a partir de las respuestas de la IA**: se aceptó la propuesta de usar `fetch` directo
-  contra la REST API de Gemini (en vez del SDK oficial) para no sumar dependencias; se aceptó la estructura
-  de rutas `/chat` (galería) + `/chat/:personaje` como forma de cumplir literalmente las rutas pedidas por
-  la consigna sin inventar una ruta extra; se pidieron explícitamente ajustes sobre la primera propuesta
-  (endpoint sin extensión, extras completos, tests de routing dedicados, dirección visual editorial en vez
-  de un layout genérico tipo SaaS) y se verificaron manualmente en el navegador antes de aceptarlos.
-- **Verificación en navegador**: además de correr la suite de Vitest, se probó la aplicación en un
-  navegador real (desktop y viewport mobile de 375px), lo que permitió detectar y corregir dos bugs reales
-  de CSS introducidos durante el desarrollo (el nav del header no bajaba de línea en mobile por faltar
-  `flex-wrap`, y el header de la vista de chat se apretaba en pantallas angostas) antes de dar el trabajo
-  por terminado.
-- **Verificación end-to-end contra Gemini real**: el usuario aportó una API key de prueba para validar la
-  integración real (no solo mockeada). Eso permitió detectar y corregir dos problemas concretos en
-  `api/functions.js` que ningún test mockeado podía haber revelado:
-  1. El modelo `gemini-2.0-flash` está deprecado — la propia API devolvía 404 indicando migrar a
-     `gemini-3.6-flash`.
-  2. Gemini 3 reserva por defecto casi todo el `maxOutputTokens` para razonamiento interno ("thinking"),
-     truncando las respuestas de chat a apenas unas palabras. Se agregó `thinkingConfig: { thinkingBudget: 0 }`
-     porque un chat de personaje no necesita ese razonamiento profundo.
-  También se corrió `vercel dev` real (no un sustituto) para replicar el comportamiento exacto de
-  producción, lo que además destapó que declarar `"dev": "vercel dev"` en `package.json` dispara un error
-  de invocación recursiva (`DEV_RECURSIVE_INVOCATION`) propio de la CLI de Vercel — se sacó ese script y
-  se documentó correr `vercel dev` directo.
-  Con esas correcciones, se probaron los tres personajes y una conversación multi-turno completa: Bugs
-  Bunny recordó correctamente un nombre mencionado en un mensaje anterior, confirmando que el historial
-  completo se reenvía en cada request tal como pide la consigna.
-- Los *system prompts* de los tres personajes fueron escritos por la IA como borrador inicial y ya fueron
-  validados con respuestas reales de Gemini durante el desarrollo; igualmente se recomienda una revisión
-  manual adicional en Google AI Studio antes de un uso más extendido.
-- **Rediseño visual**: a pedido explícito del usuario, se rehizo la interfaz para que se sienta como
-  "escenas" ilustradas (ver sección "Diseño visual") en vez de un layout genérico de IA, con referencia
-  visual a Cartoon Network clásico + diseño editorial, sin copiarlo literalmente. Al integrar las imágenes
-  reales de los personajes que aportó el usuario, se detectó (leyendo los archivos, no adivinando) que
-  ninguna tenía transparencia real; la solución de "figurita enmarcada" para disimularlo fue una decisión
-  de diseño tomada en el momento, no algo pedido de antemano. También se corrigió un bug real: el fallback
-  de imagen rota (`onerror`) llamaba `.remove()` antes de leer `.parentElement`, lo que lanzaba
-  `Cannot read properties of null` en la consola — se detectó revisando la consola del navegador, no solo
-  mirando el resultado visual.
+Posteriormente, durante la etapa de planificación, Claude fue utilizado como asistente para analizar
+alternativas de arquitectura y organización del proyecto. La IA propuso distintas posibilidades y el
+usuario evaluó, modificó y decidió cuáles implementar. Entre otras cuestiones, se trabajó sobre el router
+SPA, el contrato de la serverless function, la separación entre fetching, transformación y renderizado, los
+breakpoints y la estrategia de testing.
+
+Durante la implementación, la IA tuvo principalmente un rol de soporte técnico ante problemas concretos. En
+determinados momentos, cuando el usuario no sabía cómo resolver un error, se encontraba desorientado
+respecto de una implementación específica o aparecía un error de sintaxis, se recurrió a Claude para
+analizar el problema, explicar su causa y proponer una posible solución. Estas sugerencias fueron luego
+revisadas, implementadas y comprobadas por el usuario.
+
+Un ejemplo concreto fue la integración con Gemini. Inicialmente se había implementado la conexión
+utilizando `fetch` directamente contra la API REST, evitando incorporar dependencias innecesarias. Durante
+las pruebas reales aparecieron problemas que no podían detectarse mediante mocks. Con la asistencia de
+Claude se identificó que:
+
+- el modelo `gemini-2.0-flash` utilizado inicialmente estaba deprecado y debía migrarse al modelo vigente
+  indicado por la API;
+- el modelo utilizado reservaba parte del límite de tokens para razonamiento interno, lo que provocaba que
+  las respuestas del chatbot fueran excesivamente cortas;
+- fue necesario configurar `thinkingConfig` para desactivar ese razonamiento en este caso de uso, ya que se
+  trataba de un chat de personajes.
+
+Estas correcciones fueron realizadas a partir de problemas encontrados durante las pruebas reales y no
+simplemente copiando una implementación propuesta por la IA.
+
+También se utilizó Claude como apoyo para interpretar y corregir errores producidos durante la ejecución
+del proyecto, incluyendo problemas relacionados con Vercel, rutas, CSS y JavaScript. Por ejemplo, durante
+las pruebas en dispositivos de diferentes tamaños se detectaron problemas de responsive design que fueron
+analizados y corregidos. En mobile, el menú del header no se adaptaba correctamente porque faltaba
+`flex-wrap`, y la cabecera de la vista de chat necesitó ajustes para evitar que los elementos se
+comprimieran en pantallas pequeñas.
 
 ---
 
