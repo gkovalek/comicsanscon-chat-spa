@@ -197,21 +197,15 @@ vercel --prod # deploy de producción
 
 ## Capturas de pantalla
 
+Todas contra la app real en producción (https://comicsanscon-chat-spa.vercel.app).
+
 | Home | Galería |
 |---|---|
-| ![Home](docs/screenshots/home.png) | ![Galería](docs/screenshots/galeria.png) |
+| ![Home](docs/screenshots/home.jpg) | ![Galería](docs/screenshots/galeria.jpg) |
 
 | Chat — Oso Yogui | Chat — Scooby-Doo | Chat — Bugs Bunny |
 |---|---|---|
-| ![Chat con Oso Yogui](docs/screenshots/chat-yogui.png) | ![Chat con Scooby-Doo](docs/screenshots/chat-scooby.png) | ![Chat con Bugs Bunny](docs/screenshots/chat-bugs.png) |
-
-**Vista mobile**
-
-![Vista mobile](docs/screenshots/mobile.png)
-
-> Las imágenes van en `docs/screenshots/` con esos nombres exactos (ver
-> [docs/screenshots/README.md](docs/screenshots/README.md)) — apenas se agreguen al repo, GitHub las
-> muestra solas en esta tabla.
+| ![Chat con Oso Yogui](docs/screenshots/chat-yogui.jpg) | ![Chat con Scooby-Doo](docs/screenshots/chat-scooby.jpg) | ![Chat con Bugs Bunny](docs/screenshots/chat-bugs.jpg) |
 
 ---
 
