@@ -525,17 +525,15 @@ img {
   height: 190px;
 }
 
-/* "Figurita" de colección: cada personaje sobre su propio fondo negro
-   (parte del arte, no un recorte), enmarcado como una pequeña postal. */
+/* Los PNG tienen transparencia real: el personaje se apoya directo sobre el
+   fondo de cada escena (sin caja/tarjeta), con una sombra que sigue su
+   silueta en vez de un box-shadow rectangular. */
 .scene__figure-img,
 .character-card__img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: #0a0a0a;
-  border: 3px solid var(--color-text);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
+  filter: drop-shadow(0 6px 6px rgba(10, 10, 10, 0.28));
   animation: float-y 4.2s ease-in-out infinite;
 }
 
@@ -794,16 +792,13 @@ img {
   flex-shrink: 0;
   width: 56px;
   height: 56px;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--color-text);
-  background: #0a0a0a;
-  overflow: hidden;
 }
 
 .about__portrait-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(10, 10, 10, 0.25));
 }
 
 .about__disclaimer {
@@ -861,16 +856,13 @@ img {
   flex-shrink: 0;
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--color-text);
-  background: #0a0a0a;
-  overflow: hidden;
 }
 
 .chat-view__portrait-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(10, 10, 10, 0.3));
   animation: none;
 }
 
