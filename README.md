@@ -197,10 +197,21 @@ vercel --prod # deploy de producción
 
 ## Capturas de pantalla
 
-*Pendiente: agregar acá capturas de la aplicación ya desplegada en producción (Home, galería, una
-conversación completa con cada personaje, y la vista en mobile). Durante el desarrollo se verificó el flujo
-completo funcionando contra la API real de Gemini vía `vercel dev` local — quedan pendientes las capturas
-"oficiales" contra la URL pública ya desplegada.*
+| Home | Galería |
+|---|---|
+| ![Home](docs/screenshots/home.png) | ![Galería](docs/screenshots/galeria.png) |
+
+| Chat — Oso Yogui | Chat — Scooby-Doo | Chat — Bugs Bunny |
+|---|---|---|
+| ![Chat con Oso Yogui](docs/screenshots/chat-yogui.png) | ![Chat con Scooby-Doo](docs/screenshots/chat-scooby.png) | ![Chat con Bugs Bunny](docs/screenshots/chat-bugs.png) |
+
+**Vista mobile**
+
+![Vista mobile](docs/screenshots/mobile.png)
+
+> Las imágenes van en `docs/screenshots/` con esos nombres exactos (ver
+> [docs/screenshots/README.md](docs/screenshots/README.md)) — apenas se agreguen al repo, GitHub las
+> muestra solas en esta tabla.
 
 ---
 
@@ -218,9 +229,9 @@ conversación real con cada uno de los tres personajes contra la API de Gemini.
 1. Confirmar que la `GEMINI_API_KEY` cargada en Vercel (Production y Preview) es la definitiva — la
    usada fue la que el usuario compartió para testing; si se pegó en algún chat o lugar no seguro,
    conviene rotarla en Google AI Studio y actualizarla con `vercel env rm` / `vercel env add`.
-2. Agregar las capturas de pantalla "oficiales" al README (Home, galería, chat de cada personaje, vista
-   mobile) — no se generaron automáticamente porque el entorno no tiene forma de guardar capturas del
-   navegador como archivos del repo.
+2. Sacar las capturas de pantalla y guardarlas en `docs/screenshots/` con los nombres indicados en
+   [docs/screenshots/README.md](docs/screenshots/README.md) — no se generaron automáticamente porque el
+   entorno no tiene forma de guardar capturas del navegador como archivos del repo.
 3. Opcional: conectar el proyecto de Vercel al repositorio de GitHub (`vercel git connect`) para que cada
    push a `master` dispare un deploy automático. Ahora mismo el deploy se hizo manual por CLI (`vercel
    --prod`); conectarlo crea una integración/webhook persistente, así que se dejó pendiente de
