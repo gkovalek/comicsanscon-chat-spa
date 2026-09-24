@@ -248,7 +248,7 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-sm);
+  padding: 10px var(--space-sm);
   border-bottom: 3px solid var(--color-text);
   background: var(--color-surface);
 }
@@ -265,7 +265,7 @@ img {
 }
 
 .site-header__logo {
-  height: 132px;
+  height: 64px;
   width: auto;
   display: block;
   transition: filter var(--transition-base);
@@ -273,7 +273,7 @@ img {
 
 @media (min-width: 768px) {
   .site-header__logo {
-    height: 156px;
+    height: 88px;
   }
 }
 
