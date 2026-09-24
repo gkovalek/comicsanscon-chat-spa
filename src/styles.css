@@ -264,9 +264,22 @@ img {
   color: var(--color-text);
 }
 
-.site-header__mark {
-  display: inline-flex;
-  color: var(--color-primary);
+.site-header__logo {
+  height: 28px;
+  width: auto;
+  display: block;
+  transition: filter var(--transition-base);
+}
+
+/* El logo es negro sólido: se invierte a blanco en modo oscuro para que no desaparezca. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .site-header__logo {
+    filter: invert(1);
+  }
+}
+
+:root[data-theme='dark'] .site-header__logo {
+  filter: invert(1);
 }
 
 .site-nav {
